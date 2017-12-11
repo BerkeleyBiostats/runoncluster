@@ -33,9 +33,18 @@ def cli(code_file, inputs_file, config_file):
         'code': code_file.read().decode('utf-8')
     }
 
+    print("Submitting job to %s" % submit_url)
+
     response = requests.post(submit_url, json=payload, headers={
         'Content-Type': 'application/json',
         'Authorization': config['token'],
     })
 
-    print(response)
+    if response.status_code == 200:
+        print("Submission success. View results at:")
+        print("")
+        print(response.json()['results_url'])
+        print("")
+    else:
+        print("Error submitting to server!")
+        print(response)
