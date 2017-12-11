@@ -11,7 +11,6 @@ def read_config(config_file):
         if value.startswith("${"):
             var_name = value[2:-1]
             config[key] = os.environ.get(var_name, None)
-            print("Replaced %s with %s" % (key, config[key]))
     return config
 
 @click.command()
