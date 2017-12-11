@@ -52,7 +52,7 @@ The configuration file lets the CLI know where to send the job. Here is an examp
 		"ghap_username": "${GHAP_USERNAME}",
 		"ghap_password": "${GHAP_PASSWORD}",
 		"ghap_ip": "${GHAP_IP}",
-		"token": "admintoken"
+		"token": "${TLAPP_TOKEN}"
 	}
 
 The special `${VAR_NAME}` syntax will read the value from an environment variable before pushing it to the server.

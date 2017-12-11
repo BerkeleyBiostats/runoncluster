@@ -1,0 +1,7 @@
+{
+	"base_url": "https://tl-app-rvit.herokuapp.com/",
+	"ghap_username": "${GHAP_USERNAME}",
+	"ghap_password": "${GHAP_PASSWORD}",
+	"ghap_ip": "${GHAP_IP}",
+	"token": "${TLAPP_TOKEN}"
+}

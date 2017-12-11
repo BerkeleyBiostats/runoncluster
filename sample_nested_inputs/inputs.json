@@ -1,0 +1,12 @@
+{
+	"sample_size": 500,
+	"data": {
+		"uri": "https://git.ghap.io/stash/scm/hbgd/ki1000111.git",
+		"repository_path": "WASH-BK/adam/full_ki1000111_WASH_BK.csv",
+		"nodes": {
+			"W": "",
+			"A": "",
+			"Y": [""]
+		}
+	}
+}
