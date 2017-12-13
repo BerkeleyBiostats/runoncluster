@@ -52,10 +52,21 @@ The configuration file lets the CLI know where to send the job. Here is an examp
 		"ghap_username": "${GHAP_USERNAME}",
 		"ghap_password": "${GHAP_PASSWORD}",
 		"ghap_ip": "${GHAP_IP}",
-		"token": "${TLAPP_TOKEN}"
+		"token": "${TLAPP_TOKEN}",
+		"r_packages": [
+			"knitr",
+			"github://jeremyrcoyle/delayed@reduce-r-version",
+			"igraph@1.0.1"
+		]
 	}
 
 The special `${VAR_NAME}` syntax will read the value from an environment variable before pushing it to the server.
+
+The `r_packages` section allows you to define R packages to be installed on the target system. There are a few special syntaxes supported:
+
+* `<package_name>` installs from CRAN
+* `<package_name>@<version> installs a specific version of a package from CRAN
+* `github://<username>/<package_name>` installs from Github using `devtools`
 
 Right now, you have to ask a developer for an API token. Improved UX coming soon!
 
