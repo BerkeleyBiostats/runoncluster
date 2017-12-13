@@ -40,8 +40,16 @@ Use the `params` feature for passing inputs to the script:
 Set the values of parameters as key/value pairs in a json file:
 
 	{
-		"sample_size": 10000
+		"sample_size": 10000,
+		"data": {
+			"uri": "https://git.ghap.io/stash/scm/hbgd/ki1000111.git",
+			"repository_path": "WASH-BK/adam/full_ki1000111_WASH_BK.csv"
+		}		
 	}
+
+If a `data` section is included with a `git.ghap.io` URL, tl-app will clone that repo to the GHAP filesystem and replace the URI with one that points to the file specific in `repository_path`. This way your RMarkdown script can simply:
+
+	dataset = data.table::fread(params$data$uri)
 
 **config.json**
 
