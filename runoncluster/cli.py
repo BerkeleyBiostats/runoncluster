@@ -18,7 +18,13 @@ def expand_r_package_definition(package_definition):
     return output
 
 def build_provision_code(r_packages_section):
-    return "\n".join([expand_r_package_definition(pd) for pd in r_packages_section])
+    create_directories = """
+
+mkdir -p "/data/R/x86_64-redhat-linux-gnu-library/3.2/"
+mkdir -p "/data/R/x86_64-redhat-linux-gnu-library/3.4/"
+
+"""
+    return create_directories + "\n".join([expand_r_package_definition(pd) for pd in r_packages_section])
 
 def read_config(config_file):
     config = json.loads(config_file.read())
