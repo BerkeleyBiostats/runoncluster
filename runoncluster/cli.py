@@ -48,7 +48,6 @@ def cli(code_file, inputs_file, config_file):
     provision_code = None
     if 'r_packages' in config:
         provision_code = build_provision_code(config['r_packages'])
-        print(provision_code)
 
     payload = {
         'ghap_credentials': {
