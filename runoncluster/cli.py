@@ -3,29 +3,6 @@ import json
 import click
 import requests
 
-def expand_r_package_definition(package_definition):
-    if package_definition.startswith("github://"):
-        full_package_name = package_definition[len("github://"):]
-        package_name = full_package_name.split("/")[-1]
-        output = "R -e \"if (!require('%s')) devtools::install_github('%s')\"" % (package_name, full_package_name)
-    elif "@" in package_definition:
-        package_name, version = package_definition.split("@")
-        output = "R -e \"if (!require('%s')) devtools::install_version('%s', version='%s', repos = 'http://cran.rstudio.com/')\"" % (package_name, package_name, version)
-    else:
-        package_name = package_definition
-        output = "R -e \"if (!require('%s')) install.packages('%s', repos = 'http://cran.rstudio.com/')\"" % (package_name, package_name)
-
-    return output
-
-def build_provision_code(r_packages_section):
-    create_directories = """
-
-mkdir -p "/data/R/x86_64-redhat-linux-gnu-library/3.2/"
-mkdir -p "/data/R/x86_64-redhat-linux-gnu-library/3.4/"
-
-"""
-    return create_directories + "\n".join([expand_r_package_definition(pd) for pd in r_packages_section])
-
 def read_config(config_file):
     config = json.loads(config_file.read())
 
@@ -45,10 +22,6 @@ def cli(code_file, inputs_file, config_file):
 
     submit_url = os.path.join(config['base_url'], "submit_job_token/")
 
-    provision_code = None
-    if 'r_packages' in config:
-        provision_code = build_provision_code(config['r_packages'])
-
     payload = {
         'ghap_credentials': {
             'username': config['ghap_username'],
@@ -58,7 +31,7 @@ def cli(code_file, inputs_file, config_file):
         'inputs': json.loads(inputs_file.read()),
         'backend': 'ghap',
         'code': code_file.read().decode('utf-8'),
-        'provision': provision_code
+        'r_packages': config.get('r_packages')
     }
 
     print("Submitting job to %s" % submit_url)
