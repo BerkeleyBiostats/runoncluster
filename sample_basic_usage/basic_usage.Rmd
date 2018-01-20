@@ -1,30 +1,40 @@
 ---
-title: "Sample of basic usage of CLI"
-author: "Marc Pare"
-date: "12/10/2017"
+title: "Sample TL App script"
+author: "Jeremy Coyle"
+date: "9/1/2017"
 output: 
   html_document:
     self_contained: false
 params:
-  sample_size: 150
-  data: 0
+  data: 
+    value: 
+      type: 'web'
+      dataset_uri: 'https://raw.githubusercontent.com/BerkeleyBiostats/tlapp/30821fe37d9fdb2cb645ad2c42f63f1c1644d7c4/cpp.csv'
+  nodes:
+    value:
+      A: ['foo', 'bar']
+      W: ['baz']
+  script_params:
+    value:
+      sample_size:
+        input: 'numeric'
+        value: 200
+      threshold:
+        input: 'checkbox'
+        value: TRUE
 ---
 
-```{r setup, include=FALSE, results='show'}
+```{r setup, include=FALSE}
 library(knitr)
-
-# Since Rmd parameters don't support nested defaults, we set default
-# values for params$data here:
-if (length(params$data) == 1 && params$data == 0) {
-  dataset_uri = "https://raw.githubusercontent.com/BerkeleyBiostats/tlapp/30821fe37d9fdb2cb645ad2c42f63f1c1644d7c4/cpp.csv"
-} else {
-  dataset_uri = params$data$uri
-}
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Here are the column names of the dataset at `r dataset_uri`
-
-```{r sessionInfo, echo=FALSE, results="asis"}
-dataset = data.table::fread(dataset_uri)
-colnames(dataset)
+```{r params}
+library(tltools)
+data <- get_tl_data()
+nodes <- get_tl_nodes()
+tl_params <- get_tl_params()
+print(data)
+print(nodes)
+print(tl_params)
 ```
